@@ -1,0 +1,39 @@
+<html>
+<body>
+  <form>
+    <label for="weekday-select">Επέλεξε την ημέρα που δουλεύεις</label><br>
+    <select id="weekday-select">
+      <script>
+        let currentDate = new Date();
+        for (let i = 0; i < 7; i++) {
+          const option = document.createElement("option");
+          option.value = currentDate.toISOString();
+          option.textContent = currentDate.toLocaleString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' });
+          document.getElementById("weekday-select").appendChild(option);
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+      </script>
+    </select>
+    <br>
+    <button type="button" onclick="calc()">Υπολόγισε</button>
+  </form>
+
+  <script>
+    function calc() {
+      const selectedOptionValue = document.getElementById("weekday-select").value;
+      const selectedDate = new Date(selectedOptionValue);
+      const currentYear = new Date().getFullYear();
+      const dateList = document.createElement("ul");
+      while (selectedDate.getFullYear() <= currentYear) {
+        const listItem = document.createElement("li");
+        listItem.textContent = selectedDate.toLocaleDateString('el-GR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        dateList.appendChild(listItem);
+        selectedDate.setDate(selectedDate.getDate() + 3);
+      }
+      document.body.appendChild(dateList);
+    }
+
+  </script>
+</body>
+
+</html>
